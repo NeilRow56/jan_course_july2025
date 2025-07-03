@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 import { ModeToggle } from './mode-toggle'
+import { Logout } from './logout'
 
 export function Header() {
   return (
@@ -20,18 +21,15 @@ export function Header() {
           </Link>
         </div>
 
-        <div className='flex h-12 items-center'>
+        <div className='flex h-12 items-center gap-2'>
+          <Link href='/login'>
+            <Button>Login</Button>
+          </Link>
+          <Link href='/signup'>
+            <Button>Signup</Button>
+          </Link>
+          <Logout />
           <ModeToggle />
-          <Button
-            variant='ghost'
-            size='icon'
-            aria-label='LogOut'
-            title='LogOut'
-            className='rounded-full'
-            asChild
-          >
-            LogOUT
-          </Button>
         </div>
       </div>
     </header>

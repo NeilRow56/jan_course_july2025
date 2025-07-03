@@ -50,10 +50,10 @@ export default function RootLayout({
               classNames: {
                 error: 'bg-red-400 p-2 rounded-md text-white p-2 ',
                 success:
-                  'border-green-500 border-2 text-green-500 p-2 rounded-md ',
+                  'border-gray-500 border-2 text-green-500 p-2 rounded-md ',
                 warning:
-                  'border-orange-500 border-2 text-orange-500 p-2 rounded-md ',
-                info: 'border-blue-500 border-2 text-blue-500 p-2 rounded-md '
+                  'border-gray-500 border-2 text-orange-500 p-2 rounded-md ',
+                info: 'border-gray-500 border-2 text-blue-500 p-2 rounded-md '
               }
             }}
           />
