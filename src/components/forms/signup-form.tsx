@@ -32,9 +32,9 @@ import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
 
 const formSchema = z.object({
-  username: z.string().min(3),
+  username: z.string().min(3, { error: 'Username should be >= 3 Characters ' }),
   email: z.email(),
-  password: z.string().min(8)
+  password: z.string().min(8, { error: 'Password should be >= 8 Characters ' })
 })
 
 export function SignupForm({
