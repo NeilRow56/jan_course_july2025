@@ -1,7 +1,13 @@
-export default function Home() {
+import { GetStartedButton } from '@/components/get-started-button'
+
+export default function HomePage() {
   return (
-    <div className='grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20'>
-      Home Page
+    <div className='flex h-dvh items-center justify-center'>
+      <div className='flex flex-col items-center justify-center gap-8'>
+        <h1 className='text-6xl font-bold'>Better Authy</h1>
+
+        <GetStartedButton />
+      </div>
     </div>
   )
 }

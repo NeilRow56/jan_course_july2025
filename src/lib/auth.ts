@@ -21,7 +21,8 @@ export const auth = betterAuth({
         react: VerifyEmail({ username: user.name, verifyUrl: url })
       })
     },
-    sendOnSignUp: true
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true
   },
   emailAndPassword: {
     enabled: true,

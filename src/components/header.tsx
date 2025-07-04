@@ -11,17 +11,22 @@ export function Header() {
       <div className='flex h-12 w-full items-center justify-between'>
         <div className='flex items-center gap-2'>
           <Link
-            href='/home'
+            href='/'
             className='ml-0 flex items-center justify-center gap-2'
             title='Home'
           >
             <h1 className='m-0 hidden text-xl font-bold sm:block'>
-              Computer Repair Shop
+              Jan - Better Auth - Course
             </h1>
           </Link>
         </div>
 
         <div className='flex h-12 items-center gap-2'>
+          <Link href='/profile'>
+            <Button className='bg-blue-600 text-white hover:bg-blue-400 dark:hover:text-gray-900'>
+              Profile
+            </Button>
+          </Link>
           <Link href='/login'>
             <Button>Login</Button>
           </Link>

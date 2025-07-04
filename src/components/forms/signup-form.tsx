@@ -66,7 +66,7 @@ export function SignupForm({
       toast.success(
         `${message as string} Please check your email for verification.`
       )
-      router.push('/dashboard')
+      router.push('/login')
     } else {
       toast.error(message as string)
     }
@@ -94,7 +94,7 @@ export function SignupForm({
                         <FormItem>
                           <FormLabel>Username</FormLabel>
                           <FormControl>
-                            <Input placeholder='e.gexample589' {...field} />
+                            <Input placeholder='e.g. example589' {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
