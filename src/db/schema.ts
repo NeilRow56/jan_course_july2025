@@ -1,4 +1,15 @@
-import { pgTable, text, timestamp, boolean } from 'drizzle-orm/pg-core'
+import {
+  pgTable,
+  text,
+  timestamp,
+  boolean,
+  varchar,
+  pgEnum
+} from 'drizzle-orm/pg-core'
+import { createdAt, id, updatedAt } from './schema-helpers'
+import { relations } from 'drizzle-orm'
+
+export const user_roleEnum = pgEnum('user_role', ['user', 'admin'])
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -59,5 +70,28 @@ export const verification = pgTable('verification', {
     () => /* @__PURE__ */ new Date()
   )
 })
+
+export const posts = pgTable('posts', {
+  id,
+  userId: text('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'no action' }),
+  title: varchar().notNull(),
+  content: text().notNull(),
+  createdAt,
+  updatedAt
+})
+
+// Create relations
+export const usersRelations = relations(user, ({ many }) => ({
+  posts: many(posts)
+}))
+
+export const postsRelations = relations(posts, ({ one }) => ({
+  user: one(user, {
+    fields: [posts.userId],
+    references: [user.id]
+  })
+}))
 
 export const schema = { user, session, account, verification }

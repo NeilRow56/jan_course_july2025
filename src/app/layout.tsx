@@ -45,17 +45,19 @@ export default function RootLayout({
 
           {children}
           <Toaster
-            toastOptions={{
-              unstyled: true,
-              classNames: {
-                error: 'bg-red-400 p-2 rounded-md text-white p-2 ',
-                success:
-                  'border-gray-500 border-2 text-green-800 p-2 rounded-md ',
-                warning:
-                  'border-gray-500 border-2 text-orange-500 p-2 rounded-md ',
-                info: 'border-gray-500 border-2 text-blue-500 p-2 rounded-md '
-              }
-            }}
+            // toastOptions={{
+            //   unstyled: true,
+            //   classNames: {
+            //     error: 'bg-red-400 p-2 rounded-md text-white p-2 ',
+            //     success:
+            //       'border-gray-500 border-2 text-green-800 p-2 rounded-md ',
+            //     warning:
+            //       'border-gray-500 border-2 text-orange-500 p-2 rounded-md ',
+            //     info: 'border-gray-500 border-2 text-blue-500 p-2 rounded-md '
+            //   }
+            // }}
+            position='top-center'
+            richColors
           />
         </ThemeProvider>
       </body>
