@@ -40,6 +40,21 @@ export const auth = betterAuth({
     },
     requireEmailVerification: true
   },
+  user: {
+    additionalFields: {
+      role: {
+        type: ['user', 'admin'],
+        input: false
+      }
+    }
+  },
+  session: {
+    expiresIn: 30 * 24 * 60 * 60 // 30 days - default is 7 days
+    // cookieCache: {
+    //   enabled: true,
+    //   maxAge: 5 * 60,
+    // },
+  },
   database: drizzleAdapter(db, {
     provider: 'pg',
     schema
@@ -47,3 +62,5 @@ export const auth = betterAuth({
 
   plugins: [nextCookies()]
 })
+
+export type ErrorCode = keyof typeof auth.$ERROR_CODES | 'UNKNOWN'

@@ -1,6 +1,6 @@
 'use client'
 
-import { authClient } from '@/lib/auth-client'
+import { signOut } from '@/lib/auth-client'
 import { Button } from './ui/button'
 import { LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -9,7 +9,7 @@ export function Logout() {
   const router = useRouter()
 
   const handleLogout = async () => {
-    await authClient.signOut()
+    await signOut()
     router.push('/')
   }
 

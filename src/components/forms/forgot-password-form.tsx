@@ -27,7 +27,7 @@ import { toast } from 'sonner'
 import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
-import { authClient } from '@/lib/auth-client'
+import { forgetPassword } from '@/lib/auth-client'
 
 const formSchema = z.object({
   email: z.email()
@@ -49,7 +49,7 @@ export function ForgotPasswordForm({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
-    const { error } = await authClient.forgetPassword({
+    const { error } = await forgetPassword({
       email: values.email,
       redirectTo: '/reset-password'
     })

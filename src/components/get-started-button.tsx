@@ -27,8 +27,8 @@ export const GetStartedButton = () => {
       {session && (
         <p className='flex items-center gap-2'>
           <span
-            // data-role={session.user.role}
-            className='size-4 animate-pulse rounded-full data-[role=ADMIN]:bg-red-600 data-[role=USER]:bg-blue-600'
+            data-role={session.user.role}
+            className='size-4 animate-pulse rounded-full data-[role=admin]:bg-red-600 data-[role=user]:bg-blue-600'
           />
           Welcome back, {session.user.name}! 👋
         </p>

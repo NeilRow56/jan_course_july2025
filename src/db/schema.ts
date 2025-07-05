@@ -9,7 +9,7 @@ import {
 import { createdAt, id, updatedAt } from './schema-helpers'
 import { relations } from 'drizzle-orm'
 
-export const user_roleEnum = pgEnum('user_role', ['user', 'admin'])
+export const user_roleEnum = pgEnum('role', ['user', 'admin'])
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -19,6 +19,7 @@ export const user = pgTable('user', {
     .$defaultFn(() => false)
     .notNull(),
   image: text('image'),
+  role: user_roleEnum('role').notNull().default('user'),
   createdAt: timestamp('created_at')
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
