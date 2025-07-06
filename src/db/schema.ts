@@ -9,7 +9,9 @@ import {
 import { createdAt, id, updatedAt } from './schema-helpers'
 import { relations } from 'drizzle-orm'
 
-export const user_roleEnum = pgEnum('role', ['user', 'admin'])
+export const userRoles = ['USER', 'ADMIN'] as const
+export type UserRole = (typeof userRoles)[number]
+export const user_roleEnum = pgEnum('role', userRoles)
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -19,8 +21,12 @@ export const user = pgTable('user', {
     .$defaultFn(() => false)
     .notNull(),
   image: text('image'),
-  role: user_roleEnum('role').notNull().default('user'),
+  role: user_roleEnum('role').notNull().default('USER'),
+  banned: boolean('banned'),
+  banReason: text('ban_reason'),
+  banExpires: timestamp('ban_expires_at'),
   createdAt: timestamp('created_at')
+    .$defaultFn(() => /* @__PURE__ */ new Date())
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
   updatedAt: timestamp('updated_at')
@@ -36,6 +42,7 @@ export const session = pgTable('session', {
   updatedAt: timestamp('updated_at').notNull(),
   ipAddress: text('ip_address'),
   userAgent: text('user_agent'),
+  impersonatedBy: text('impersonated_by'),
   userId: text('user_id')
     .notNull()
     .references(() => user.id, { onDelete: 'cascade' })

@@ -3,19 +3,23 @@ import {
   PlaceholderDeleteUserButton
 } from '@/components/delete-user-button'
 import ReturnButton from '@/components/return-button'
+import { UserRoleSelect } from '@/components/user-role-select'
+import { UserRole } from '@/db/schema'
 import { auth } from '@/lib/auth'
 import { USER_ROLES } from '@/lib/constants'
 import { cn } from '@/lib/utils'
-import { findAllUsers } from '@/resources/user-queries'
+
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 export default async function Page() {
+  const headersList = await headers()
+
   const session = await auth.api.getSession({
-    headers: await headers()
+    headers: headersList
   })
 
-  if (!session) redirect('/auth/login')
+  if (!session) redirect('/login')
 
   if (session.user.role !== USER_ROLES.ADMIN) {
     return (
@@ -33,7 +37,18 @@ export default async function Page() {
     )
   }
 
-  const users = await findAllUsers()
+  const { users } = await auth.api.listUsers({
+    headers: headersList,
+    query: {
+      sortBy: 'name'
+    }
+  })
+
+  const sortedUsers = users.sort((a, b) => {
+    if (a.role === 'ADMIN' && b.role !== 'ADMIN') return -1
+    if (a.role !== 'ADMIN' && b.role === 'ADMIN') return 1
+    return 0
+  })
   return (
     <div className='container mx-auto max-w-screen-lg space-y-8 px-8 py-16'>
       <div className='space-y-4'>
@@ -68,7 +83,7 @@ export default async function Page() {
         </thead>
 
         <tbody>
-          {users.map(user => (
+          {sortedUsers.map(user => (
             <tr key={user.id} className='border-b text-left text-sm'>
               <td className='px-6 py-3'>{user.id.slice(0, 8)}</td>
               <td
@@ -84,9 +99,11 @@ export default async function Page() {
                   timeZone: 'UTC'
                 })}
               </td>
-              <td className='px-6 py-3 uppercase'>{user.role}</td>
+              <td className='px-6 py-3 uppercase'>
+                <UserRoleSelect userId={user.id} role={user.role as UserRole} />
+              </td>
               <td className='px-6 py-3'>
-                {user.role === 'user' ? (
+                {user.role === 'USER' ? (
                   <DeleteUserButton userId={user.id} />
                 ) : (
                   <PlaceholderDeleteUserButton />

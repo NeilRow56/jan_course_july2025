@@ -20,7 +20,7 @@ export async function deleteUserAction({ userId }: { userId: string }) {
 
   // Set so that you cannot delete yourself
 
-  if (session.user.role !== 'admin' || session.user.id === userId) {
+  if (session.user.role !== 'ADMIN' || session.user.id === userId) {
     throw new Error('Forbidden')
   }
 
@@ -29,7 +29,7 @@ export async function deleteUserAction({ userId }: { userId: string }) {
 
     if (session.user.id === userId) {
       await auth.api.signOut({ headers: headersList })
-      redirect('/sign-in')
+      redirect('/login')
     }
 
     revalidatePath('/dashboard/admin')

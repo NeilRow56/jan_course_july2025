@@ -3,7 +3,7 @@ import { schema } from '@/db/schema'
 
 import VerifyEmail from '@/components/emails/verify-email'
 import { betterAuth } from 'better-auth'
-
+import { ac, roles } from '@/lib/permissions'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { nextCookies } from 'better-auth/next-js'
 import { Resend } from 'resend'
@@ -44,7 +44,7 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       role: {
-        type: ['user', 'admin'],
+        type: ['USER', 'ADMIN'],
         input: false
       }
     }
@@ -64,8 +64,10 @@ export const auth = betterAuth({
   plugins: [
     nextCookies(),
     admin({
-      defaultRole: 'user',
-      adminRoles: ['admin']
+      defaultRole: 'USER',
+      adminRoles: ['ADMIN'],
+      ac,
+      roles
     })
   ]
 })
