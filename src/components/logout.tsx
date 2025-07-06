@@ -11,6 +11,7 @@ export function Logout() {
   const handleLogout = async () => {
     await signOut()
     router.push('/')
+    router.refresh()
   }
 
   return (

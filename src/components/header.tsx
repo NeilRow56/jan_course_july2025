@@ -4,8 +4,13 @@ import { Button } from '@/components/ui/button'
 
 import { ModeToggle } from './mode-toggle'
 import { Logout } from './logout'
+import { auth } from '@/lib/auth'
+import { headers } from 'next/headers'
 
-export function Header() {
+export async function Header() {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
   return (
     <header className='animate-slide bg-background sticky top-0 z-20 border-b px-2'>
       <div className='flex h-12 w-full items-center justify-between'>
@@ -22,18 +27,33 @@ export function Header() {
         </div>
 
         <div className='flex h-12 items-center gap-2'>
-          <Link href='/profile'>
-            <Button className='bg-blue-600 text-white hover:bg-blue-400 dark:hover:text-gray-900'>
-              Profile
-            </Button>
-          </Link>
-          <Link href='/login'>
-            <Button>Login</Button>
-          </Link>
-          <Link href='/signup'>
-            <Button>Signup</Button>
-          </Link>
-          <Logout />
+          {!session?.user ? (
+            <div className='flex items-center gap-2'>
+              <div>{session?.user.name}</div>
+              <Link href='/login'>
+                <Button>Login</Button>
+              </Link>
+              <Link href='/signup'>
+                <Button>Signup</Button>
+              </Link>
+            </div>
+          ) : (
+            <div className='flex items-center gap-2'>
+              <div>
+                {session?.user.name}-
+                <span className='font-semibold text-blue-600'>
+                  {session?.user.role} user
+                </span>
+              </div>
+              <Link href='/profile'>
+                <Button className='bg-blue-600 text-white hover:bg-blue-400 dark:hover:text-gray-900'>
+                  Profile
+                </Button>
+              </Link>
+              <Logout />
+            </div>
+          )}
+
           <ModeToggle />
         </div>
       </div>

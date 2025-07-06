@@ -5,9 +5,6 @@ import './globals.css'
 
 import { Toaster } from '@/components/ui/sonner'
 
-import { ThemeProvider } from '@/components/theme-provider'
-import { Header } from '@/components/header'
-
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin']
@@ -33,33 +30,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className='mx-auto w-full max-w-7xl items-center'>
-            <Header />
-          </div>
-
-          {children}
-          <Toaster
-            // toastOptions={{
-            //   unstyled: true,
-            //   classNames: {
-            //     error: 'bg-red-400 p-2 rounded-md text-white p-2 ',
-            //     success:
-            //       'border-gray-500 border-2 text-green-800 p-2 rounded-md ',
-            //     warning:
-            //       'border-gray-500 border-2 text-orange-500 p-2 rounded-md ',
-            //     info: 'border-gray-500 border-2 text-blue-500 p-2 rounded-md '
-            //   }
-            // }}
-            position='top-center'
-            richColors
-          />
-        </ThemeProvider>
+        {children}
+        <Toaster
+          // toastOptions={{
+          //   unstyled: true,
+          //   classNames: {
+          //     error: 'bg-red-400 p-2 rounded-md text-white p-2 ',
+          //     success:
+          //       'border-gray-500 border-2 text-green-800 p-2 rounded-md ',
+          //     warning:
+          //       'border-gray-500 border-2 text-orange-500 p-2 rounded-md ',
+          //     info: 'border-gray-500 border-2 text-blue-500 p-2 rounded-md '
+          //   }
+          // }}
+          position='top-center'
+          richColors
+        />
       </body>
     </html>
   )
