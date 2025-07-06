@@ -1,3 +1,7 @@
+import {
+  DeleteUserButton,
+  PlaceholderDeleteUserButton
+} from '@/components/delete-user-button'
 import ReturnButton from '@/components/return-button'
 import { auth } from '@/lib/auth'
 import { USER_ROLES } from '@/lib/constants'
@@ -75,7 +79,7 @@ export default async function Page() {
                   'bg-primary/10': user.role === USER_ROLES.ADMIN
                 })}
               >
-                <td className='px-6 py-3'>{user.id}</td>
+                <td className='px-6 py-3'>{user.id.slice(0, 8)}</td>
                 <td
                   className={cn('px-6 py-3', {
                     'opacity-50': user.name === null
@@ -90,7 +94,13 @@ export default async function Page() {
                   })}
                 </td>
                 <td className='px-6 py-3 uppercase'>{user.role}</td>
-                <td className='px-6 py-3'>Action</td>
+                <td className='px-6 py-3'>
+                  {user.role === 'user' ? (
+                    <DeleteUserButton userId={user.id} />
+                  ) : (
+                    <PlaceholderDeleteUserButton />
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
