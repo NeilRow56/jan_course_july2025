@@ -8,6 +8,7 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { nextCookies } from 'better-auth/next-js'
 import { Resend } from 'resend'
 import ForgotPasswordEmail from '@/components/emails/reset-password'
+import { admin } from 'better-auth/plugins/admin'
 
 const resend = new Resend(process.env.RESEND_API_KEY as string)
 
@@ -60,7 +61,13 @@ export const auth = betterAuth({
     schema
   }),
 
-  plugins: [nextCookies()]
+  plugins: [
+    nextCookies(),
+    admin({
+      defaultRole: 'user',
+      adminRoles: ['admin']
+    })
+  ]
 })
 
 export type ErrorCode = keyof typeof auth.$ERROR_CODES | 'UNKNOWN'

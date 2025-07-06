@@ -35,77 +35,67 @@ export default async function Page() {
 
   const users = await findAllUsers()
   return (
-    <main className='mt-4'>
-      <div className='container mx-auto'>
-        <div className='flex items-center justify-between'>
-          <h1 className='text-primary text-3xl font-bold tracking-tight'>
-            Admin Panel
-          </h1>
-        </div>
+    <div className='container mx-auto max-w-screen-lg space-y-8 px-8 py-16'>
+      <div className='space-y-4'>
+        <ReturnButton href='/profile' label='Profile' />
 
-        <div className='bg-muted my-4 h-1' />
-        <h2 className='text-primary text-2xl font-bold tracking-tight'>
-          All Users
-        </h2>
+        <h1 className='text-3xl font-bold'>Admin Dashboard</h1>
 
-        <div className='bg-muted my-4 h-1' />
-        <table className='mt-4 w-full table-auto divide-y'>
-          <thead>
-            <tr className='divide-x'>
-              <th className='bg-primary px-6 py-3 text-start text-white'>id</th>
-              <th className='bg-primary px-6 py-3 text-start text-white'>
-                username
-              </th>
-              <th className='bg-primary px-6 py-3 text-start text-white'>
-                email
-              </th>
-              <th className='bg-primary px-6 py-3 text-start text-white'>
-                date created
-              </th>
-              <th className='bg-primary px-6 py-3 text-start text-white'>
-                role
-              </th>
-              <th className='bg-primary px-6 py-3 text-start text-white'>
-                action
-              </th>
-            </tr>
-          </thead>
+        <p className='rounded-md bg-green-600 p-2 text-lg font-bold text-white'>
+          ACCESS GRANTED
+        </p>
+      </div>
 
-          <tbody>
-            {users.map(user => (
-              <tr
-                key={user.id}
-                className={cn('divide-x', {
-                  'bg-primary/10': user.role === USER_ROLES.ADMIN
+      <div className='w-full overflow-x-auto' />
+      <table className='mt-4 min-w-full table-auto whitespace-nowrap'>
+        <thead>
+          <tr className='divide-x'>
+            <th className='bg-primary px-6 py-3 text-start text-white'>id</th>
+            <th className='bg-primary px-6 py-3 text-start text-white'>
+              username
+            </th>
+            <th className='bg-primary px-6 py-3 text-start text-white'>
+              email
+            </th>
+            <th className='bg-primary px-6 py-3 text-start text-white'>
+              date created
+            </th>
+            <th className='bg-primary px-6 py-3 text-start text-white'>role</th>
+            <th className='bg-primary px-6 py-3 text-start text-white'>
+              action
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {users.map(user => (
+            <tr key={user.id} className='border-b text-left text-sm'>
+              <td className='px-6 py-3'>{user.id.slice(0, 8)}</td>
+              <td
+                className={cn('px-6 py-3', {
+                  'opacity-50': user.name === null
                 })}
               >
-                <td className='px-6 py-3'>{user.id.slice(0, 8)}</td>
-                <td
-                  className={cn('px-6 py-3', {
-                    'opacity-50': user.name === null
-                  })}
-                >
-                  {user.name ?? 'NULL'}
-                </td>
-                <td className='px-6 py-3'>{user.email}</td>
-                <td className='px-6 py-3'>
-                  {user.createdAt.toLocaleDateString('en-GB', {
-                    timeZone: 'UTC'
-                  })}
-                </td>
-                <td className='px-6 py-3 uppercase'>{user.role}</td>
-                <td className='px-6 py-3'>
-                  {user.role === 'user' ? (
-                    <DeleteUserButton userId={user.id} />
-                  ) : (
-                    <PlaceholderDeleteUserButton />
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </main>
+                {user.name ?? 'NULL'}
+              </td>
+              <td className='px-6 py-3'>{user.email}</td>
+              <td className='px-6 py-3'>
+                {user.createdAt.toLocaleDateString('en-GB', {
+                  timeZone: 'UTC'
+                })}
+              </td>
+              <td className='px-6 py-3 uppercase'>{user.role}</td>
+              <td className='px-6 py-3'>
+                {user.role === 'user' ? (
+                  <DeleteUserButton userId={user.id} />
+                ) : (
+                  <PlaceholderDeleteUserButton />
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }

@@ -18,6 +18,8 @@ export async function deleteUserAction({ userId }: { userId: string }) {
 
   if (!session) throw new Error('Unauthorized')
 
+  // Set so that you cannot delete yourself
+
   if (session.user.role !== 'admin' || session.user.id === userId) {
     throw new Error('Forbidden')
   }
