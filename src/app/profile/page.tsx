@@ -2,6 +2,7 @@ import { Logout } from '@/components/logout'
 import ReturnButton from '@/components/return-button'
 
 import { Button } from '@/components/ui/button'
+import { UpdateUserForm } from '@/components/forms/update-user-form'
 
 import { auth } from '@/lib/auth'
 import { USER_ROLES } from '@/lib/constants'
@@ -54,10 +55,33 @@ export default async function Page() {
           MANAGE ALL POSTS
         </Button>
       </div>
+      {session.user.image ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={session.user.image}
+          alt='User Image'
+          className='border-primary size-32 rounded-md border object-cover'
+        />
+      ) : (
+        <div className='border-primary bg-primary text-primary-foreground flex size-32 items-center justify-center rounded-md border'>
+          <span className='text-lg font-bold uppercase'>
+            {session.user.name.slice(0, 2)}
+          </span>
+        </div>
+      )}
 
       <pre className='overflow-clip text-sm'>
         {JSON.stringify(session, null, 2)}
       </pre>
+
+      <div className='space-y-4 rounded-b-md border border-t-8 border-blue-600 p-4'>
+        <h2 className='text-2xl font-bold'>Update User</h2>
+
+        <UpdateUserForm
+          name={session.user.name}
+          image={session.user.image ?? ''}
+        />
+      </div>
     </div>
   )
 }

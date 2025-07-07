@@ -24,7 +24,7 @@ export const UserRoleSelect = ({ userId, role }: UserRoleSelectProps) => {
       }
     })
 
-    if (!canChangeRole.data?.success) {
+    if (canChangeRole.error) {
       return toast.error('Forbidden')
     }
 
